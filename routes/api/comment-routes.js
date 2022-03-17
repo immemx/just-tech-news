@@ -1,9 +1,13 @@
 const router = require('express').Router();
-const { Comment } = require('../../models');
-const sequelize = require('../../config/connection');
+const { Comment, Post } = require('../../models');
 
 router.get('/', (req, res) => {
-
+    Comment.findAll({})
+    .then(dbCommentData => res.json(dbCommentData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 router.post('/', (req, res) => {
@@ -20,7 +24,22 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-
+    Post.destroy({
+        where: {
+            id: res.params.id
+        }
+    })
+    .then(dbCommentData => {
+        if (!dbPostData) {
+            res.status(404).jso({ message: 'No comment was found with this id'})
+            return
+        }
+        res.json(dbPostData);
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json(err);
+    })
 });
 
 module.exports = router;
