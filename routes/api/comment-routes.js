@@ -2,9 +2,9 @@ const router = require('express').Router();
 const { Comment } = require('../../models');
 const sequelize = require('../../config/connection');
 
-router.get('/', (req, res) => {
+// router.get('/', (req, res) => {
 
-});
+// });
 
 router.post('/', (req, res) => {
     Comment.create({
